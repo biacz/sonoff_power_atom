@@ -5,8 +5,8 @@
 #include <ArduinoOTA.h>
 #include "Secrets.h"
 
-#define ROOM "office"
-#define NAME "silberne_lampe"
+#define ROOM "abstellkammer"
+#define NAME "test"
 
 const char* cmndTopic1 = "/house/" ROOM "/" NAME "/set";
 const char* cmndTopic2 = "/house/group/power";
