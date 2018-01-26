@@ -5,12 +5,12 @@
 #include <ArduinoOTA.h>
 #include "Secrets.h"
 
-#define ROOM "abstellkammer"
-#define NAME "test"
+#define ROOM "office"
+#define NAME "silberne_lampe"
 
-const char* cmndTopic1 = "/house/" ROOM "/" NAME "/set";
-const char* cmndTopic2 = "/house/group/power";
-const char* statusTopic = "/house/" ROOM "/" NAME "/status";
+const char* cmndTopic1 = "house/" ROOM "/" NAME "/set";
+const char* cmndTopic2 = "house/group/power";
+const char* statusTopic = "house/" ROOM "/" NAME "/status";
 
 #define BUTTON_PIN 0
 #define RELAY_PIN 12
@@ -115,6 +115,9 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(TRIGGER_PIN, INPUT_PULLUP);
   pinMode(LED_PIN, OUTPUT);
+
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), buttonChangeCallback, CHANGE);
+
   digitalWrite(RELAY_PIN, LOW);
   digitalWrite(LED_PIN, LOW);
 
@@ -123,8 +126,6 @@ void setup() {
 
   MQTTClient.setServer(MQTT_SERVER, MQTT_PORT);
   MQTTClient.setCallback(MQTTcallback);
-
-  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), buttonChangeCallback, CHANGE);
 }
 
 void loop() {
